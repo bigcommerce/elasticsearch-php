@@ -14,15 +14,15 @@ use Mockery as m;
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @link       http://elasticsearch.org
  */
-class SniffingConnectionPoolTest extends \PHPUnit_Framework_TestCase
+class SniffingConnectionPoolTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         static::markTestSkipped("All of Sniffing unit tests use outdated cluster state format, need to redo");
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -190,11 +190,9 @@ class SniffingConnectionPoolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($connections[9], $retConnection);
     }
 
-    /**
-     * @expectedException Elasticsearch\Common\Exceptions\NoNodesAvailableException
-     */
     public function testAddTenNodesAllTimeout()
     {
+        $this->expectException(Elasticsearch\Common\Exceptions\NoNodesAvailableException::class);
         $connections = array();
 
         foreach (range(1, 10) as $index) {
@@ -368,11 +366,9 @@ class SniffingConnectionPoolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($newConnections[12], $retConnection);
     }
 
-    /**
-     * @expectedException Elasticsearch\Common\Exceptions\NoNodesAvailableException
-     */
     public function testTen_TimeoutNine_SniffTenth_AddTwoDead_TimeoutEveryone()
     {
+        $this->expectException(Elasticsearch\Common\Exceptions\NoNodesAvailableException::class);
         $clusterState = json_decode('{"ok":true,"cluster_name":"elasticsearch_zach","nodes":{"node1":{"name":"Vesta","transport_address":"inet[/192.168.1.119:9300]","hostname":"zach-ThinkPad-W530","version":"0.90.5","http_address":"inet[/192.168.1.119:9200]"}, "node2":{"name":"Vesta","transport_address":"inet[/192.168.1.119:9301]","hostname":"zach-ThinkPad-W530","version":"0.90.5","http_address":"inet[/192.168.1.119:9201]"}}}', true);
 
         $connections = array();

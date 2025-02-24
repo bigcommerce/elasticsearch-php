@@ -10,7 +10,7 @@
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @link       http://elasticsearch.org
  */
-class StaticConnectionPoolIntegrationTest extends \PHPUnit_Framework_TestCase
+class StaticConnectionPoolIntegrationTest extends \PHPUnit\Framework\TestCase
 {
     // Issue #636
     public function test404Liveness() {

@@ -92,8 +92,8 @@ interface ConnectionInterface
      * @param null $params
      * @param null $body
      * @param array $options
-     * @param \Elasticsearch\Transport $transport
+     * @param \Elasticsearch\Transport|null $transport
      * @return mixed
      */
-    public function performRequest($method, $uri, $params = null, $body = null, $options = [], Transport $transport = null);
+    public function performRequest($method, $uri, $params = null, $body = null, $options = [], ?Transport $transport = null);
 }

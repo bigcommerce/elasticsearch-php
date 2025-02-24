@@ -161,10 +161,10 @@ class Connection implements ConnectionInterface
      * @param null $params
      * @param null $body
      * @param array $options
-     * @param \Elasticsearch\Transport $transport
+     * @param \Elasticsearch\Transport|null $transport
      * @return mixed
      */
-    public function performRequest($method, $uri, $params = null, $body = null, $options = [], Transport $transport = null)
+    public function performRequest($method, $uri, $params = null, $body = null, $options = [], ?Transport $transport = null)
     {
         if (isset($body) === true) {
             $body = $this->serializer->serialize($body);
@@ -207,7 +207,7 @@ class Connection implements ConnectionInterface
 
     private function wrapHandler(callable $handler, LoggerInterface $logger, LoggerInterface $tracer)
     {
-        return function (array $request, Connection $connection, Transport $transport = null, $options) use ($handler, $logger, $tracer) {
+        return function (array $request, Connection $connection, ?Transport $transport, $options) use ($handler, $logger, $tracer) {
 
             $this->lastRequest = [];
             $this->lastRequest['request'] = $request;
@@ -556,13 +556,13 @@ class Connection implements ConnectionInterface
         $exception = new MaxRetriesException($message);
         switch ($response['curl']['errno']) {
             case 6:
-                $exception = new CouldNotResolveHostException($message, null, $exception);
+                $exception = new CouldNotResolveHostException($message, 0, $exception);
                 break;
             case 7:
-                $exception = new CouldNotConnectToHost($message, null, $exception);
+                $exception = new CouldNotConnectToHost($message, 0, $exception);
                 break;
             case 28:
-                $exception = new OperationTimeoutException($message, null, $exception);
+                $exception = new OperationTimeoutException($message, 0, $exception);
                 break;
         }
 

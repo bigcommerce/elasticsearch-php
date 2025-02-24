@@ -14,7 +14,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
     private $trace;
     private $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->trace = $this->createMock(LoggerInterface::class);
@@ -56,7 +56,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         );
         $headers =  $connection->getHeaders();
         $this->assertArrayHasKey('User-Agent', $headers);
-        $this->assertContains('elasticsearch-php/'. Client::VERSION, $headers['User-Agent'][0]);
+        $this->assertStringContainsString('elasticsearch-php/'. Client::VERSION, $headers['User-Agent'][0]);
     }
 
     public function testUserAgentHeaderIsSent()
@@ -76,6 +76,6 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase
         $result = $connection->performRequest('GET', '/');
         $request = $connection->getLastRequestInfo()['request'];
         $this->assertArrayHasKey('User-Agent', $request['headers']);
-        $this->assertContains('elasticsearch-php/'. Client::VERSION, $request['headers']['User-Agent'][0]);
+        $this->assertStringContainsString('elasticsearch-php/'. Client::VERSION, $request['headers']['User-Agent'][0]);
     }
 }

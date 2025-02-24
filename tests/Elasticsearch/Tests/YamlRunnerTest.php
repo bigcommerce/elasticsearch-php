@@ -29,7 +29,7 @@ use Symfony\Component\Yaml\Yaml;
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @link       http://elasticsearch.org
  */
-class YamlRunnerTest extends \PHPUnit_Framework_TestCase
+class YamlRunnerTest extends \PHPUnit\Framework\TestCase
 {
     /** @var Parser Yaml parser for reading integrations tests */
     private $yaml;
@@ -102,7 +102,7 @@ class YamlRunnerTest extends \PHPUnit_Framework_TestCase
         echo "ES Version: ".static::$esVersion."\n";
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->clean();
         $builder = Elasticsearch\ClientBuilder::create()->setHosts([self::getHost()]);

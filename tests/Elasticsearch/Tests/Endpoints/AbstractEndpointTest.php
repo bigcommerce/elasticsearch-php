@@ -2,9 +2,10 @@
 
 namespace Elasticsearch\Tests\Endpoints;
 
+use Elasticsearch\Common\Exceptions\UnexpectedValueException;
 use Elasticsearch\Endpoints\AbstractEndpoint;
 
-class AbstractEndpointTest extends \PHPUnit_Framework_TestCase
+class AbstractEndpointTest extends \PHPUnit\Framework\TestCase
 {
     private $endpoint;
 
@@ -18,10 +19,10 @@ class AbstractEndpointTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidParameters
-     * @expectedException Elasticsearch\Common\Exceptions\UnexpectedValueException
      */
     public function testInvalidParamsCauseErrorsWhenProvidedToSetParams(array $params)
     {
+        $this->expectException(UnexpectedValueException::class);
         $this->endpoint->expects($this->once())
             ->method('getParamWhitelist')
             ->willReturn(['one', 'two']);
@@ -29,7 +30,7 @@ class AbstractEndpointTest extends \PHPUnit_Framework_TestCase
         $this->endpoint->setParams($params);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->endpoint = $this->getMockForAbstractClass(AbstractEndpoint::class);
     }

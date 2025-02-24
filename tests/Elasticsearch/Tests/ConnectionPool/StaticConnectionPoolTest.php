@@ -16,9 +16,9 @@ use Mockery as m;
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache2
  * @link       http://elasticsearch.org
  */
-class StaticConnectionPoolTest extends \PHPUnit_Framework_TestCase
+class StaticConnectionPoolTest extends \PHPUnit\Framework\TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -83,11 +83,9 @@ class StaticConnectionPoolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($connections[0], $retConnection);
     }
 
-    /**
-     * @expectedException Elasticsearch\Common\Exceptions\NoNodesAvailableException
-     */
     public function testAllHostsFailPing()
     {
+        $this->expectException(Elasticsearch\Common\Exceptions\NoNodesAvailableException::class);
         $connections = array();
 
         foreach (range(1, 10) as $index) {
