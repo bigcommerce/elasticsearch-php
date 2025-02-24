@@ -8,7 +8,7 @@ class StatusEndpointTest extends \PHPUnit\Framework\TestCase
 {
     private $endpoint;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->endpoint = new Status();
     }
